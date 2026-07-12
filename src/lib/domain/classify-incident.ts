@@ -3,7 +3,7 @@ import type { IncidentInput, IncidentCategory } from '../types';
 /** Keyword map for classifying incidents by category */
 const CATEGORY_KEYWORDS: Record<IncidentCategory, string[]> = {
   'lost-child': ['lost child', 'missing child', 'lost kid', 'missing kid', 'unaccompanied minor', 'child alone', 'kid alone', 'child crying'],
-  'medical': ['medical', 'injury', 'injured', 'fainted', 'unconscious', 'bleeding', 'heart', 'seizure', 'allergic', 'ambulance', 'first aid', 'hurt', 'pain', 'sick'],
+  'medical': ['medical', 'injury', 'injured', 'fainted', 'unconscious', 'bleeding', 'heart', 'seizure', 'allergic', 'ambulance', 'first aid', 'hurt', 'pain', 'sick', 'cardiac', 'arrest'],
   'crowd-buildup': ['crowd', 'overcrowd', 'congestion', 'bottleneck', 'stampede', 'crush', 'too many people', 'packed', 'blocked gate', 'queue'],
   'accessibility': ['wheelchair', 'disability', 'disabled', 'accessible', 'ramp', 'blind', 'deaf', 'hearing aid', 'mobility', 'crutches', 'service animal'],
   'aggressive-fan': ['aggressive', 'fight', 'fighting', 'violent', 'drunk', 'threatening', 'altercation', 'confrontation', 'harassing', 'abuse'],

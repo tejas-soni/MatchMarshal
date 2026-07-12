@@ -54,3 +54,4 @@ audit_report.json
 
 # editors
 .agents/
+.idea/
