@@ -26,7 +26,7 @@ export function buildFallbackResponse(input: IncidentInput): CopilotResponse {
   const severity = computeSeverity(validated);
   const actions = recommendActions(category, severity);
   const escalation = buildEscalation(category, severity);
-  const multilingualPhrase = buildMultilingualTemplate(category, validated.language ?? 'en');
+  const multilingualPhrase = buildMultilingualTemplate(category, validated.language);
 
   return {
     category,

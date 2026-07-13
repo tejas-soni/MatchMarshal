@@ -78,4 +78,13 @@ describe('buildMultilingualTemplate', () => {
     }
     expect(count).toBe(54);
   });
+  it('falls back to general category for unknown category', () => {
+    const phrase = buildMultilingualTemplate('unknown' as IncidentCategory, 'es');
+    expect(phrase).toBe(buildMultilingualTemplate('general', 'es'));
+  });
+
+  it('falls back to English for unknown language', () => {
+    const phrase = buildMultilingualTemplate('medical', 'unknown' as SupportedLanguage);
+    expect(phrase).toBe(buildMultilingualTemplate('medical', 'en'));
+  });
 });

@@ -93,4 +93,9 @@ describe('recommendActions', () => {
       expect(s.order).toBeGreaterThanOrEqual(1);
     }
   });
+  it('falls back to general actions for unknown category', () => {
+    const steps = recommendActions('unknown' as IncidentCategory, medium);
+    expect(steps.length).toBeGreaterThanOrEqual(2);
+    expect(steps[0].action).toMatch(/gather more information/i);
+  });
 });

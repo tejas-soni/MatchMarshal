@@ -92,4 +92,8 @@ describe('buildEscalation', () => {
     const b = buildEscalation('lost-item', high);
     expect(a).toEqual(b);
   });
+  it('falls back to general contact for unknown category', () => {
+    const plan = buildEscalation('unknown' as IncidentCategory, medium);
+    expect(plan.contactRole).toBe('supervisor');
+  });
 });

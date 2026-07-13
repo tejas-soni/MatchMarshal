@@ -92,7 +92,7 @@ export function detectPromptInjection(text: string): boolean {
   }
   // Secondary check for any remaining HTML-like dangerous constructs
   for (const html of DANGEROUS_HTML) {
-    if (html.test(text) || html.test(sanitized)) return true;
+    if (html.test(text)) return true;
   }
   return false;
 }
