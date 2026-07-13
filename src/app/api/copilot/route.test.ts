@@ -67,6 +67,88 @@ describe('POST /api/copilot API Route Handler', () => {
     expect(body.multilingualPhrase).toBeDefined();
   });
 
+  it('returns English phrase fallback when requested language phrase is missing', async () => {
+    // phrases only has 'en'; requesting 'hi' hits the `|| parsedRes.phrases['en']` branch (line 94)
+    const mockGeminiJson = {
+      candidates: [
+        {
+          content: {
+            parts: [
+              {
+                text: JSON.stringify({
+                  category: 'navigation',
+                  severity: { score: 15, level: 'low' },
+                  phrases: {
+                    en: 'Please follow the signs.',
+                    // 'hi' is intentionally absent
+                  },
+                }),
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockGeminiJson,
+    });
+
+    const req = new NextRequest('http://localhost/api/copilot', {
+      method: 'POST',
+      body: JSON.stringify({ description: 'How do I get to Gate 7?', language: 'hi' }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    // Falls back to English phrase
+    expect(body.multilingualPhrase).toBe('Please follow the signs.');
+    expect(body.isFallback).toBe(false);
+  });
+
+  it('returns empty string phrase when no matching or English phrase exists', async () => {
+    // Neither 'hi' nor 'en' are in phrases - hits the final || '' branch (line 94)
+    const mockGeminiJson = {
+      candidates: [
+        {
+          content: {
+            parts: [
+              {
+                text: JSON.stringify({
+                  category: 'general',
+                  severity: { score: 10, level: 'low' },
+                  phrases: {
+                    fr: 'Veuillez suivre les panneaux.',
+                    // neither 'hi' nor 'en' are present
+                  },
+                }),
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockGeminiJson,
+    });
+
+    const req = new NextRequest('http://localhost/api/copilot', {
+      method: 'POST',
+      body: JSON.stringify({ description: 'General inquiry', language: 'hi' }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    // Both fallbacks absent — multilingualPhrase is empty string
+    expect(body.multilingualPhrase).toBe('');
+    expect(body.isFallback).toBe(false);
+  });
+
   it('performs successful Gemini API request and returns structured response', async () => {
     const mockGeminiJson = {
       candidates: [
@@ -207,5 +289,22 @@ describe('POST /api/copilot API Route Handler', () => {
 
     const body = await res.json();
     expect(body.category).toBe('crowd-buildup'); // Returns fallback response payload
+  });
+
+  it('returns 200 fallback when fetch throws a network error (catch branch)', async () => {
+    // Make fetch throw to exercise the catch block (lines 112–117)
+    mockFetch.mockRejectedValueOnce(new Error('Network failure'));
+
+    const req = new NextRequest('http://localhost/api/copilot', {
+      method: 'POST',
+      body: JSON.stringify({ description: 'Fire in the north stand', language: 'en' }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    // Catch-all fallback returns a valid triage object
+    expect(body.category).toBeDefined();
+    expect(body.severity).toBeDefined();
   });
 });

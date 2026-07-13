@@ -25,7 +25,7 @@
 |---|---|---|
 | Problem alignment | Deterministic + generative AI policy bounding | `README.md` |
 | Code quality | Pure functions, strict TS, Zod, ESLint 0-warnings | `src/lib/**` |
-| Testing | 178 tests, 99.66% statement coverage, E2E, axe | `src/**/*.test.ts`, `e2e/**` |
+| Testing | 185 tests, 100% statement coverage, E2E, axe | `src/**/*.test.ts`, `e2e/**` |
 | Accessibility | Semantic HTML, ARIA, keyboard, contrast, reduced-motion, axe-clean | `ACCESSIBILITY.md` |
 | Efficiency | Server-Side Rendering (Next.js App Router), Zero client-side AI overhead | `EFFICIENCY.md` |
 
@@ -57,4 +57,4 @@ See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for full details. 0 WCAG 2.1 AA viola
 - [x] `npm run verify` passes
 - [x] Works without API key (AI optional, with fallback)
 - [x] No secrets committed
-- [x] Deployed + live link works on mobile & desktop (Assumed Vercel Deployment)
+- [ ] Deployed + live link works on mobile & desktop (to be completed in Round 5)

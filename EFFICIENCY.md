@@ -4,14 +4,8 @@
 
 ### AI Evaluation Score: **100/100**
 
-### Core Web Vitals (Lighthouse, live URL)
-| Metric | Score |
-| :--- | :---: |
-| Performance | 100 |
-| Accessibility | 100 |
-| Best Practices | 100 |
-| SEO | 100 |
-| LCP / CLS / INP | <0.5s / 0 / <100ms |
+### Core Web Vitals (Lighthouse)
+*To be measured and documented after live production deployment.*
 
 ## 2. Rendering
 - Server-Side Rendering (SSR) / static generation via Next.js App Router for fast first paint; client JS only where needed.

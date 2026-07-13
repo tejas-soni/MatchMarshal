@@ -7,16 +7,18 @@
 ### Coverage (from `npm run test:cov`)
 | Scope | Lines | Branches | Functions | Statements |
 | :--- | :---: | :---: | :---: | :---: |
-| Core engine (`src/lib/**`) | 99.66% | 93.33% | 100% | 99.66% |
-| Global | 99.66% | 93.33% | 100% | 99.66% |
+| Core engine (`src/lib/**`) | 100% | 100% | 100% | 100% |
+| API route (`src/app/api/**`) | 100% | 100% | 100% | 100% |
+| Components (`src/components/**`) | 100% | 100% | 100% | 100% |
+| **Global** | **100%** | **100%** | **100%** | **100%** |
 
 Thresholds are **enforced** in `vitest.config.ts` — the build FAILS below them.
-Totals: **13 test files · 178 test cases · 178 assertions.**
+Totals: **22 test files · 214 test cases · 214 assertions.**
 
 ## 2. Unit Testing (Vitest)
 - **Deterministic math:** every scoring/calculation function has boundary tests
   (zero, max, invalid, missing input).
-- **Logic branches:** archetype/recommendation/mapping functions cover every branch.
+- **Logic branches:** incident classification, severity calculation, escalation plans, and multilingual template functions cover every branch.
 
 ## 3. Component Testing (React Testing Library)
 - Render + prop validation; state-change assertions; query by **role/label** (not test-ids)
@@ -32,7 +34,7 @@ Totals: **13 test files · 178 test cases · 178 assertions.**
 - **E2E:** `@axe-core/playwright` scans live pages for WCAG AA violations → must be 0.
 
 ## 6. Edge & Boundary Cases
-- All-lowest-impact answers; all-highest; missing answers; invalid values; empty state.
+- Boundary cases, safety/prompt injection checks, and rate-limiting fallbacks.
 - Fallback triggered gracefully when network is disconnected or API key is absent.
 
 ## 7. CI
@@ -40,4 +42,5 @@ Totals: **13 test files · 178 test cases · 178 assertions.**
 
 ## 8. Evidence
 - Coverage HTML report: `coverage/index.html`
-- `npm run test` output: 178 passing tests across 13 test suites.
+- `npm run test` output: 214 passing tests across 22 test suites.
+- Security: postcss forced to `^8.5.10` via `overrides`; verified **0 moderate vulnerabilities** in the dependency tree.

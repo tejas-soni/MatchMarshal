@@ -1,23 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
 import { checkRateLimit } from '@/lib/ai/rate-limit';
 import { buildIncidentPrompt, parseIncidentResponse } from '@/lib/ai/prompt';
 import { buildFallbackResponse } from '@/lib/domain/build-fallback-response';
 import { clampLength, detectPromptInjection, sanitizeInput } from '@/lib/ai/safety';
 import { recommendActions } from '@/lib/domain/recommend-actions';
 import { buildEscalation } from '@/lib/domain/build-escalation';
+import { incidentInputSchema } from '@/lib/schemas';
 import type { IncidentCategory, SeverityLevel } from '@/lib/types';
-
-const requestSchema = z.object({
-  description: z.string(),
-  language: z.enum(['en', 'es', 'fr', 'ar', 'pt', 'hi']),
-});
 
 export async function POST(req: NextRequest) {
   try {
     // 1. Parse body and validate structure
     const body = await req.json();
-    const result = requestSchema.safeParse(body);
+    const result = incidentInputSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json({ error: 'Invalid request payload.' }, { status: 400 });
     }
@@ -54,12 +49,13 @@ export async function POST(req: NextRequest) {
 
     // 6. Call Gemini 3.1 Flash-Lite API
     const prompt = buildIncidentPrompt(sanitized, language);
-    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+    const apiEndpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent';
 
     const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey,
       },
       body: JSON.stringify({
         contents: [

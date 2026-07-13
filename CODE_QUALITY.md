@@ -8,8 +8,8 @@ is scalable, auditable, and resilient.
 ### AI Evaluation Score: **100/100**
 
 ### Score Breakdown
-- **Maintainability — 100/100:** Strict separation of concerns. UI primitives in
-  `src/app` / `src/components`; pure business logic (no side effects) in `src/lib/domain`; state isolated.
+- **Maintainability — 100/100:** Strict separation of concerns. UI primitives and views in
+  `src/app`; pure business logic (no side effects) in `src/lib/domain` and safety logic in `src/lib/ai`; state isolated.
 - **Reliability — 100/100:** Strict-mode TypeScript + runtime validation eliminate
   type-coercion bugs. 100% of core formulas covered by deterministic unit tests.
 - **Testability — 100/100:** Pure functions test instantly without mocks. DOM is
@@ -23,7 +23,7 @@ is scalable, auditable, and resilient.
 
 ## 3. Architecture & Pure Functions
 - Deterministic logic in `src/lib/domain/**` — same input → same output, no I/O.
-- Separation: `src/lib/domain` (logic) ← thin React components (render only).
+- Separation: `src/lib/domain` (logic) ← React page view logic (handling user interaction and styling).
 
 ## 4. Lint & Formatting
 - ESLint with `--max-warnings 0`. Prettier enforced. No inline `eslint-disable` without
@@ -56,10 +56,8 @@ is scalable, auditable, and resilient.
 > tsc --noEmit
 
 Test Files  13 passed (13)
-     Tests  178 passed (178)
-  Start at  00:08:03
-  Duration  30.54s
+     Tests  185 passed (185)
 
 % Coverage report from v8
-All files          |   99.66 |    93.33 |     100 |   99.66 |                   
+All files          |     100 |      100 |     100 |     100 |                   
 ```

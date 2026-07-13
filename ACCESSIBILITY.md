@@ -8,6 +8,7 @@ Verified automatically by `vitest-axe` (unit) and `@axe-core/playwright` (E2E): 
 ## 2. Semantic HTML & Landmarks
 - Valid document outline; `<header> <nav> <main> <footer>` landmarks; one `<h1>` per page;
   logical heading order.
+- A "Skip to main content" link is provided as the first focusable element.
 
 ## 3. Color & Contrast
 - All text ≥ **4.5:1** contrast (large text ≥ 3:1). Verified with `@axe-core/playwright`.
@@ -16,18 +17,17 @@ Verified automatically by `vitest-axe` (unit) and `@axe-core/playwright` (E2E): 
 ## 4. Keyboard & Focus
 - Every interactive element reachable and operable by keyboard.
 - Visible `:focus-visible` rings. Focus tracked properly across tabs.
-- Scrollable panels use `tabIndex={0}` and `aria-label` for smooth keyboard-based scrolling.
+- Scrollable panels use `tabIndex={0}` and `aria-label` for keyboard-based scrolling.
 
 ## 5. Screen Readers
 - Every input has an associated `<label>` (or `aria-label`).
-- Decorative SVG/img marked `aria-hidden`/empty `alt`.
+- Decorative SVG icons and emojis (⚠️, 📋, 🎲, MM logo) use `aria-hidden="true"` to reduce noise.
 
 ## 6. Motion & Cognition
-- `@media (prefers-reduced-motion: reduce)` disables non-essential animation.
-- Clear, jargon-free copy; one primary action per screen.
+- `@media (prefers-reduced-motion: reduce)` disables non-essential animation, fully covering `animate-spin` and `animate-fade-in`.
 
 ## 7. Touch & Responsive
-- Touch targets ≥ 44×44px. No horizontal scroll. Readable without zoom at 320–1440px.
+- Touch targets ≥ 44px. No horizontal scroll. Readable without zoom at 320–1440px.
 
 ## 8. Evidence
 - axe results:
