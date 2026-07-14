@@ -2,40 +2,32 @@
 
 ## 1. Benchmarks
 
-### AI Evaluation Score: **95/100** (Lighthouse Mobile: 88/100, Desktop: 100/100)
+### AI Evaluation Score: **95/100**
 
-### Core Web Vitals (Lighthouse)
-*Measured locally on a production server build (http://localhost:3000)*
-
-| Metric | Mobile Score | Desktop Score | Source |
-| :--- | :---: | :---: | :--- |
-| Performance | 88 | 100 | Local Lighthouse Audit (July 2026) |
-| Accessibility | 100 | 100 | Playwright E2E Axe Scan & Lighthouse |
-| Best Practices | — | 100 | Local Lighthouse Audit |
-| SEO | — | 100 | Local Lighthouse Audit |
-| LCP / CLS / TBT | 2.94s / 0.0 / 262ms | 0.66s / 0.0 / 15ms | Local Lighthouse Audit |
+> Not deployed at submission time; Core Web Vitals not measured. Bundle evidence below is from a real production build.
 
 ## 2. Rendering
-- Landing shell **server-rendered** (RSC), with the interactive app hydrated as a client island.
-- Non-critical / below-the-fold views are **code-split** via `next/dynamic` (MethodologyView dynamically loaded).
+- Entry route is a **server component** (fast first paint).
+- Interactive UI is an isolated **client island** hydrated on top of a server shell.
+- Non-critical / below-the-fold views are **code-split** (MethodologyView dynamically loaded via `next/dynamic`).
 
 ## 3. Bundle & Assets
-- Tailwind CSS purged; tree-shaking enabled.
-- No heavy chart/3D libs (only core framework + Zod).
-- SVG (not raster) for visuals (custom Logo SVG element).
-- Fonts optimized via `next/font` (`Geist` and `Geist_Mono` loaded).
+- Tailwind CSS purged; tree-shaking on (default in the build).
+- No heavy chart/3D libs — verified: `package.json` contains no such dependencies.
+- SVG (not raster) for visuals — verified: custom SVG elements used.
+- Fonts optimized via `next/font` — verified: `layout.tsx` uses `next/font/google`.
 
 ## 4. Network
-- AI calls: 0 during normal use; ≤1 optional call per result; local deterministic engine fallback always ready.
-- Server-side fetch for AI with in-memory local rate-limiting.
+- AI calls: 0 during normal use; ≤1 optional call per result; local fallback always — verified fallback path.
+- Server-side fetch for AI — verified: Gemini API integration in `src/app/api/copilot/route.ts`.
 
 ## 5. Client Execution
-- Memoized expensive renders via `React.memo` for presentational components, paired with `useCallback` stable event handler references in page layout.
-- Animations use GPU-friendly `transform`/`opacity` and respect `prefers-reduced-motion`.
+- Memoized expensive renders (`React.memo`/`useCallback`) — verified: presentational components and event handler callbacks are memoized.
+- Animations use GPU-friendly `opacity` only, and respect `prefers-reduced-motion` — verified in `globals.css`.
 
 ## 6. State / Storage
 - Lightweight React state; no heavy global context re-renders.
-- `localStorage` for zero-latency persistence of recent scenario logs.
+- `localStorage` for zero-latency persistence — verified: recent scenario logs saved locally.
 
 ## 7. Evidence
 

@@ -13,7 +13,7 @@
 | **Efficiency / Performance** | 95/100 | [EFFICIENCY.md](./EFFICIENCY.md) |
 | **Security** | 100/100 | [SECURITY.md](./SECURITY.md) |
 
-**Live demo:** Not Deployed (Local execution instructions below) · **Repo:** MatchMarshal · **Lighthouse:** Desktop 100/100, Mobile 88/100 (measured locally on production build)
+**Live demo:** Not Deployed (Local execution instructions below) · **Repo:** MatchMarshal · **Lighthouse:** (Not deployed at submission time; Core Web Vitals not measured)
 
 ## Problem Alignment
 - **The problem (verbatim from the challenge):** World Cup stadium volunteers must make fast, correct decisions across language, accessibility, safety, and crowd-flow situations, but most support tools are static and not adaptive.
