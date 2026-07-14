@@ -2,7 +2,7 @@
 
 ## 1. Benchmarks
 
-### AI Evaluation Score: **90/100** (Lighthouse Mobile: 88/100, Desktop: 100/100)
+### AI Evaluation Score: **95/100** (Lighthouse Mobile: 88/100, Desktop: 100/100)
 
 ### Core Web Vitals (Lighthouse)
 *Measured locally on a production server build (http://localhost:3000)*
@@ -16,7 +16,7 @@
 | LCP / CLS / TBT | 2.94s / 0.0 / 262ms | 0.66s / 0.0 / 15ms | Local Lighthouse Audit |
 
 ## 2. Rendering
-- Single-route **client app** utilizing `'use client'` root page hydration over static HTML layout.
+- Landing shell **server-rendered** (RSC), with the interactive app hydrated as a client island.
 - Non-critical / below-the-fold views are **code-split** via `next/dynamic` (MethodologyView dynamically loaded).
 
 ## 3. Bundle & Assets
@@ -42,7 +42,7 @@
 ### Real production build (`npm run build`)
 ```
 Route (app)                              Size     First Load JS
-┌ ○ /                                    33.7 kB         132 kB
+┌ ○ /                                    625 B          98.9 kB
 ├ ○ /_not-found                          113 B          98.3 kB
 └ ƒ /api/copilot                         0 B            98.2 kB
 + First Load JS shared by all            98.2 kB

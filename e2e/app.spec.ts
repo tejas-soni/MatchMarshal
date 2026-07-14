@@ -28,6 +28,10 @@ test.describe('MatchMarshal Application Flow & Accessibility Scans', () => {
     // Click Methodology tab
     await page.getByRole('button', { name: /^Methodology$/i }).click();
     
+    // Wait for the dynamic MethodologyView to load and settle
+    await expect(page.getByRole('heading', { level: 2, name: /Deterministic Engine/i })).toBeVisible();
+    await page.waitForTimeout(300);
+    
     // Scan Methodology tab
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa'])

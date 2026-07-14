@@ -10,7 +10,7 @@
 | **Code Quality** | 100/100 | [CODE_QUALITY.md](./CODE_QUALITY.md) |
 | **Testing / Coverage** | 100/100 | [TESTING.md](./TESTING.md) + coverage report |
 | **Accessibility** | 100/100 | [ACCESSIBILITY.md](./ACCESSIBILITY.md) |
-| **Efficiency / Performance** | 90/100 | [EFFICIENCY.md](./EFFICIENCY.md) |
+| **Efficiency / Performance** | 95/100 | [EFFICIENCY.md](./EFFICIENCY.md) |
 | **Security** | 100/100 | [SECURITY.md](./SECURITY.md) |
 
 **Live demo:** Not Deployed (Local execution instructions below) · **Repo:** MatchMarshal · **Lighthouse:** Desktop 100/100, Mobile 88/100 (measured locally on production build)

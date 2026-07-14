@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { axe } from 'vitest-axe';
 import * as axeMatchers from 'vitest-axe/matchers';
-import MatchMarshalApp from './page';
+import MatchMarshalApp from '@/components/MatchMarshalApp';
 
 expect.extend(axeMatchers);
 
