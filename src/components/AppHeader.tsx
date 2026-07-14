@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Logo from './Logo';
 
 export type Tab = 'landing' | 'console' | 'methodology';
@@ -8,7 +8,7 @@ export interface AppHeaderProps {
   onChangeTab: (tab: Tab) => void;
 }
 
-export default function AppHeader({ activeTab, onChangeTab }: AppHeaderProps) {
+function AppHeader({ activeTab, onChangeTab }: AppHeaderProps) {
   return (
     <header className="border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 dark:border-slate-800 dark:bg-slate-900/80">
       <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -61,3 +61,5 @@ export default function AppHeader({ activeTab, onChangeTab }: AppHeaderProps) {
     </header>
   );
 }
+
+export default memo(AppHeader);

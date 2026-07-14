@@ -63,7 +63,7 @@ describe('MatchMarshal App Layout & Navigation', () => {
     expect(screen.getByLabelText(/Describe the situation on the ground/i)).toBeInTheDocument();
   });
 
-  it('navigates between tabs using header nav buttons', () => {
+  it('navigates between tabs using header nav buttons', async () => {
     render(<MatchMarshalApp />);
     
     const consoleTabBtn = screen.getByRole('button', { name: /^Console$/i });
@@ -76,7 +76,7 @@ describe('MatchMarshal App Layout & Navigation', () => {
 
     // Go to Methodology
     fireEvent.click(methodologyTabBtn);
-    expect(screen.getByRole('heading', { level: 2, name: /Deterministic Engine/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 2, name: /Deterministic Engine/i })).toBeInTheDocument();
 
     // Go back to Landing
     fireEvent.click(landingTabBtn);
@@ -160,6 +160,9 @@ describe('MatchMarshal App Accessibility (Axe)', () => {
     
     // Go to methodology
     fireEvent.click(screen.getByRole('button', { name: /^Methodology$/i }));
+    
+    // Wait for the dynamic MethodologyView to load
+    expect(await screen.findByRole('heading', { level: 2, name: /Deterministic Engine/i })).toBeInTheDocument();
     
     const results = await axe(container);
     expect(results).toHaveNoViolations();

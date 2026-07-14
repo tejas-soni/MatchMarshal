@@ -1,17 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useTransition, useRef } from 'react';
+import React, { useState, useEffect, useTransition, useRef, useCallback } from 'react';
 import { buildFallbackResponse } from '@/lib/domain/build-fallback-response';
 import { seededScenarioFeed } from '@/lib/demo/seeded-scenarios';
 import { sanitizeInput, detectPromptInjection } from '@/lib/ai/safety';
 import { checkRateLimit } from '@/lib/ai/rate-limit';
 import AppHeader, { Tab } from '@/components/AppHeader';
 import LandingView from '@/components/LandingView';
-import MethodologyView from '@/components/MethodologyView';
+import dynamic from 'next/dynamic';
 import IncidentForm from '@/components/IncidentForm';
 import RecentFeed from '@/components/RecentFeed';
 import ResultCard from '@/components/ResultCard';
 import type { CopilotResponse, SupportedLanguage, DemoScenario } from '@/lib/types';
+
+const MethodologyView = dynamic(() => import('@/components/MethodologyView'), {
+  loading: () => <div aria-live="polite" className="py-12 text-center text-sm font-bold text-slate-600 dark:text-slate-400">Loading…</div>
+});
 
 
 
@@ -64,34 +68,42 @@ export default function MatchMarshalApp() {
   }, []);
 
   // Save recent scenarios
-  const saveRecent = (desc: string) => {
-    const updated = [
-      { description: desc, timestamp: new Date().toLocaleTimeString() },
-      ...recentScenarios.slice(0, 4),
-    ];
-    setRecentScenarios(updated);
-    localStorage.setItem('matchmarshal_recents', JSON.stringify(updated));
-  };
+  const saveRecent = useCallback((desc: string) => {
+    setRecentScenarios((prev) => {
+      const updated = [
+        { description: desc, timestamp: new Date().toLocaleTimeString() },
+        ...prev.slice(0, 4),
+      ];
+      localStorage.setItem('matchmarshal_recents', JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
 
 
   // Tab changer helper supporting transitions
-  const changeTab = (tab: Tab) => {
+  const changeTab = useCallback((tab: Tab) => {
     startTransition(() => {
       setActiveTab(tab);
     });
-  };
+  }, []);
 
   // Seeded scenario loader
-  const handleLoadScenario = () => {
+  const handleLoadScenario = useCallback(() => {
     if (nextScenarioRef.current) {
       const scenario = nextScenarioRef.current();
       setDescription(scenario.description);
       setError(null);
     }
-  };
+  }, []);
+
+  // Shared preset & scenario selection handler
+  const handleSelectScenario = useCallback((text: string) => {
+    setDescription(text);
+    setError(null);
+  }, []);
 
   // Submit Handler
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setResult(null);
@@ -157,7 +169,7 @@ export default function MatchMarshalApp() {
       setResult(fallbackRes);
       saveRecent(sanitized);
     }
-  };
+  }, [description, useAI, language, saveRecent]);
 
 
   return (
@@ -193,19 +205,13 @@ export default function MatchMarshalApp() {
                 onSubmit={handleSubmit}
                 onLoadScenario={handleLoadScenario}
                 presets={PRESET_CHIPS}
-                onPresetClick={(text) => {
-                  setDescription(text);
-                  setError(null);
-                }}
+                onPresetClick={handleSelectScenario}
               />
 
               {/* Recent Scenarios Panel */}
               <RecentFeed 
                 recentScenarios={recentScenarios} 
-                onSelectScenario={(desc) => {
-                  setDescription(desc);
-                  setError(null);
-                }} 
+                onSelectScenario={handleSelectScenario} 
               />
             </div>
 

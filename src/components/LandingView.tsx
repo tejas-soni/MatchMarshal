@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 export interface LandingViewProps {
   presetChips: Array<{ label: string; text: string }>;
   onChangeTab: (tab: 'landing' | 'console' | 'methodology') => void;
 }
 
-export default function LandingView({ presetChips, onChangeTab }: LandingViewProps) {
+function LandingView({ presetChips, onChangeTab }: LandingViewProps) {
   return (
     <section className="space-y-12 animate-fade-in motion-safe:transition-all">
       {/* Hero pitch */}
@@ -83,3 +83,5 @@ export default function LandingView({ presetChips, onChangeTab }: LandingViewPro
     </section>
   );
 }
+
+export default memo(LandingView);

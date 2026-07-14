@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import SeverityBadge from './SeverityBadge';
 import type { CopilotResponse, SupportedLanguage } from '@/lib/types';
 
@@ -7,7 +7,7 @@ interface ResultCardProps {
   language: SupportedLanguage;
 }
 
-export default function ResultCard({ result, language }: ResultCardProps) {
+function ResultCard({ result, language }: ResultCardProps) {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg shadow-slate-100/50 dark:shadow-none overflow-hidden space-y-6">
       {/* Category Header */}
@@ -77,3 +77,5 @@ export default function ResultCard({ result, language }: ResultCardProps) {
     </div>
   );
 }
+
+export default memo(ResultCard);

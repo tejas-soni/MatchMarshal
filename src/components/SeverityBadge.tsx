@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 export interface SeverityBadgeProps {
   level: string;
@@ -18,10 +18,12 @@ const getSeverityBadgeClass = (level: string) => {
   }
 };
 
-export default function SeverityBadge({ level, score }: SeverityBadgeProps) {
+function SeverityBadge({ level, score }: SeverityBadgeProps) {
   return (
     <span className={`px-3 py-1 text-xs font-black tracking-wide uppercase border rounded-full ${getSeverityBadgeClass(level)}`}>
       {level} ({score})
     </span>
   );
 }
+
+export default memo(SeverityBadge);

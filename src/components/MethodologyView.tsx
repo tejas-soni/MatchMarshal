@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function MethodologyView() {
+function MethodologyView() {
   return (
     <section className="space-y-8 animate-fade-in">
       {/* Architecture Overview */}
@@ -83,3 +83,5 @@ export default function MethodologyView() {
     </section>
   );
 }
+
+export default memo(MethodologyView);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import type { SupportedLanguage } from '@/lib/types';
 
 export interface PresetChip {
@@ -20,7 +20,7 @@ interface IncidentFormProps {
   onPresetClick: (text: string) => void;
 }
 
-export default function IncidentForm({
+function IncidentForm({
   description,
   setDescription,
   language,
@@ -132,3 +132,5 @@ export default function IncidentForm({
     </div>
   );
 }
+
+export default memo(IncidentForm);
