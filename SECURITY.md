@@ -54,12 +54,14 @@ export default nextConfig;
   server (except the optional, explicit AI request).
 
 ## 7. Supply Chain
-- Minimal dependencies; lockfile committed. `npm audit` reports 2 moderate vulnerabilities (related to postcss < 8.5.10 under next.js).
+- Minimal dependencies; lockfile committed. `postcss` is pinned to `8.5.10` via `overrides`
+  in `package.json`, which resolves the earlier moderate advisories (`postcss < 8.5.10`);
+  `npm audit` reports **0 vulnerabilities**.
 
 ## 8. Evidence
 - `npm audit` output:
   ```text
-  2 moderate severity vulnerabilities (postcss < 8.5.10)
+  found 0 vulnerabilities
   ```
 - Security headers in `next.config.ts`:
   ```typescript

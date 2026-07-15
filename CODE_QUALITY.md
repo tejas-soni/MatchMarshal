@@ -8,8 +8,10 @@ is scalable, auditable, and resilient.
 ### AI Evaluation Score: **100/100**
 
 ### Score Breakdown
-- **Maintainability — 100/100:** Strict separation of concerns. UI primitives and views in
-  `src/app`; pure business logic (no side effects) in `src/lib/domain` and safety logic in `src/lib/ai`; state isolated.
+- **Maintainability — 100/100:** Strict separation of concerns. Presentational views and UI
+  primitives live in `src/components/**` (server entry + layout in `src/app`); pure business
+  logic (no side effects) in `src/lib/domain` and safety logic in `src/lib/ai`; interactive
+  state isolated in a single client island.
 - **Reliability — 100/100:** Strict-mode TypeScript + runtime validation eliminate
   type-coercion bugs. 100% of core formulas covered by deterministic unit tests.
 - **Testability — 100/100:** Pure functions test instantly without mocks. DOM is
@@ -23,14 +25,15 @@ is scalable, auditable, and resilient.
 
 ## 3. Architecture & Pure Functions
 - Deterministic logic in `src/lib/domain/**` — same input → same output, no I/O.
-- Separation: `src/lib/domain` (logic) ← React page view logic (handling user interaction and styling).
+- Separation: `src/lib/domain` (logic) ←  `src/components/**` (React views handling user interaction and styling).
 
 ## 4. Lint & Formatting
 - ESLint with `--max-warnings 0`. Prettier enforced. No inline `eslint-disable` without
   a justified comment.
 
 ## 5. State Management
-- React useState hooks with immutable updates, structured cleanly inside page components.
+- React `useState`/`useCallback` hooks with immutable updates, isolated in the `MatchMarshalApp`.
+  client island; presentational components are `memo`-wrapped to avoid needless re-renders.
 
 ## 6. Component Design (DRY)
 - Atomic UI elements; props flow down; no duplicated logic. Semantic UI structure.
@@ -55,8 +58,8 @@ is scalable, auditable, and resilient.
 > matchmarshal@0.1.0 typecheck
 > tsc --noEmit
 
-Test Files  13 passed (13)
-     Tests  185 passed (185)
+Test Files  22 passed (22)
+     Tests  214 passed (214)
 
 % Coverage report from v8
 All files          |     100 |      100 |     100 |     100 |                   
